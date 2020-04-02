@@ -222,7 +222,7 @@ export default class QRCodeScanner extends Component {
   }
 
   _renderCameraComponent() {
-    if (Platform.OS == Platform.IOS) {
+    if (Platform.OS === 'ios') {
       return (
         <Camera
           androidCameraPermissionOptions={{
