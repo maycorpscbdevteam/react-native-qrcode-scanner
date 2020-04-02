@@ -222,6 +222,25 @@ export default class QRCodeScanner extends Component {
   }
 
   _renderCameraComponent() {
+    if (Platform.OS == Platform.IOS) {
+      return (
+        <Camera
+          androidCameraPermissionOptions={{
+            title: this.props.permissionDialogTitle,
+            message: this.props.permissionDialogMessage,
+            buttonPositive: this.props.buttonPositive
+          }}
+          style={[styles.camera, this.props.cameraStyle]}
+          onGoogleVisionBarcodesDetected={this._handleBarCodeRead.bind(this)}
+          type={this.props.cameraType}
+          flashMode={this.props.flashMode}
+          captureAudio={false}
+          {...this.props.cameraProps}
+        >
+          {this._renderCameraMarker()}
+        </Camera>
+      );
+    }
     return (
       <Camera
         androidCameraPermissionOptions={{
@@ -230,7 +249,7 @@ export default class QRCodeScanner extends Component {
           buttonPositive: this.props.buttonPositive
         }}
         style={[styles.camera, this.props.cameraStyle]}
-        onBarCodeRead={this._handleBarCodeRead.bind(this)}
+        onGoogleVisionBarcodesDetected={this._handleBarCodeRead.bind(this)}
         type={this.props.cameraType}
         flashMode={this.props.flashMode}
         captureAudio={false}
