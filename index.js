@@ -49,7 +49,8 @@ export default class QRCodeScanner extends Component {
     buttonPositive: PropTypes.string,
     checkAndroid6Permissions: PropTypes.bool,
     flashMode: PropTypes.oneOf(CAMERA_FLASH_MODES),
-    cameraProps: PropTypes.object
+    cameraProps: PropTypes.object,
+    useGoogleCloud: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -101,7 +102,8 @@ export default class QRCodeScanner extends Component {
     buttonPositive: 'OK',
     checkAndroid6Permissions: false,
     flashMode: CAMERA_FLASH_MODE.auto,
-    cameraProps: {}
+    cameraProps: {},
+    useGoogleCloud: false,
   };
 
   constructor(props) {
@@ -222,7 +224,7 @@ export default class QRCodeScanner extends Component {
   }
 
   _renderCameraComponent() {
-    if (Platform.OS === 'ios') {
+    if (this.useGoogleCloud) {
       return (
         <Camera
           androidCameraPermissionOptions={{
@@ -231,7 +233,7 @@ export default class QRCodeScanner extends Component {
             buttonPositive: this.props.buttonPositive
           }}
           style={[styles.camera, this.props.cameraStyle]}
-          onBarCodeRead={this._handleBarCodeRead.bind(this)}
+          onGoogleVisionBarcodesDetected={this._handleBarCodeRead.bind(this)}
           type={this.props.cameraType}
           flashMode={this.props.flashMode}
           captureAudio={false}
@@ -249,7 +251,7 @@ export default class QRCodeScanner extends Component {
           buttonPositive: this.props.buttonPositive
         }}
         style={[styles.camera, this.props.cameraStyle]}
-        onGoogleVisionBarcodesDetected={this._handleBarCodeRead.bind(this)}
+        onBarCodeRead={this._handleBarCodeRead.bind(this)}
         type={this.props.cameraType}
         flashMode={this.props.flashMode}
         captureAudio={false}
