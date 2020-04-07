@@ -224,7 +224,8 @@ export default class QRCodeScanner extends Component {
   }
 
   _renderCameraComponent() {
-    if (this.useGoogleCloud) {
+    const useGoogleCloud = this.props.useGoogleCloud || false;
+    if (useGoogleCloud) {
       return (
         <Camera
           androidCameraPermissionOptions={{
